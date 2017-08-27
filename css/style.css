@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+}
+
+.vslider {
+  font-size: 3em;
+}
+
+.vslider > div {
+  width: 100%;
+  background: #ccc;
+  text-align: center;
+}
