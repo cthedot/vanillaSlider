@@ -10,7 +10,12 @@
       height: '5em',
       // rotate: false,
       status: true,
+      navigation: true,
       keyboardnavigation: true
+      // wheelnavigation: true,
+      // onSwipeWheel: function () {
+      //   console.log(arguments)
+      // }
     })
 
   }

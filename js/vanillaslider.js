@@ -1,8 +1,7 @@
 /*!
  * vanillaSlider
  */
-var Hammer;
-
+;
 (function ($) {
   "use strict";
 
@@ -21,6 +20,7 @@ var Hammer;
       swipenavigation: false,
       swipedirection: 'h', // h or v
       wheelnavigation: false,
+      onSwipeWheel: null,
       status: false,
       statusContent: function (c, length) {
         return '•';
@@ -33,6 +33,7 @@ var Hammer;
     this._$status
     this._active = 0
     this._timer = null
+
 
     var MAX = this._MAX = this._$slides.length
 
@@ -61,65 +62,73 @@ var Hammer;
 
 
     // NAVIGATION
-    var stop = false
-    var nomove
 
-    // if (settings.navigation) {
-    //   prevButton = $('<span class="' + prefix + 'prev"></span>').appendTo(transformer)
-    //   nextButton = $('<span class="' + prefix + 'next"></span>').appendTo(transformer)
-    //   prevButton.on('click', function () {
-    //     prev()
-    //   })
-    //   nextButton.on('click', function () {
-    //     next()
-    //   })
-    // }
+    if (settings.navigation) {
+      var $prev = document.createElement('button')
+      var $next = document.createElement('button')
+
+      $prev.classList.add(this._settings.prefix + 'prev')
+      $next.classList.add(this._settings.prefix + 'next')
+      $prev.addEventListener('click', function (e) {
+        self.prev()
+      }, true)
+      $next.addEventListener('click', function (e) {
+        self.next()
+      }, true)
+
+      $slider.appendChild($prev)
+      $slider.appendChild($next)
+    }
 
     if (settings.keyboardnavigation) {
       window.addEventListener('keydown', function (e) {
         var keyCode = e.keyCode
-        var nomove = false
 
         switch (keyCode) {
           case 39:
           case 40:
-            if (!stop) {
-              nomove = self.next()
-            }
-            // stop = settings.swipewheelcallback(false, self._active, MAX, nomove)
+            self.next()
             break
           case 37:
           case 38:
-            if (!stop) {
-              nomove = self.prev()
-            }
-            // stop = settings.swipewheelcallback(true, self._active, MAX, nomove)
+            self.prev()
             break
         }
       })
     }
 
-    // // WHEEL
-    // if (settings.wheelnavigation && $.debounce) {
-    //   var wheelcall = $.debounce(200, true, function (e) {
-    //     var nomove = false
-    //     var back = e.deltaY > 0
+    if (window.Hammer && (settings.swipenavigation || settings.navigation)) {
+      var _swipehammer = Hammer($slider, {
+        drag: false,
+        tap: false
+      })
+      _swipehammer.on(
+        settings.swipedirection === 'h' ? 'swipeleft' : 'swipedown',
+        function (e) {
+          self.prev()
+          settings.onSwipeWheel && settings.onSwipeWheel(self._active, MAX, true)
+        })
+      _swipehammer.on(settings.swipedirection === 'h' ? 'swiperight' : 'swipeup',
+        function (e) {
+          self.next()
+          settings.onSwipeWheel && settings.onSwipeWheel(self._active, MAX, false)
+        })
+    }
 
-    //     clearTimeout(timer)
-    //     if (!stop) {
-    //       nomove = next(back)
-    //     }
-    //     stop = settings.swipewheelcallback(back, c, lenimages, nomove)
-    //   })
+    if (settings.wheelnavigation) {
+      $slider.addEventListener('wheel', function (e) {
+        clearTimeout(self._timer)
 
-    //   transformer.on('mousewheel', function (e) {
-    //     wheelcall(e)
-    //     e.preventDefault()
-    //   })
-    // }
+        requestAnimationFrame(function () {
+          var next = e.deltaY > 0
 
+          self[next ? 'next' : 'prev']()
+          settings.onSwipeWheel && settings.onSwipeWheel(self._active, MAX, !next)
+        })
+        e.preventDefault()
+      }, false)
+    }
 
-    // resize
     window.addEventListener('resize', function (e) {
       requestAnimationFrame(function () {
         $slider.style.height = 'auto'
@@ -127,7 +136,7 @@ var Hammer;
       })
     })
 
-
+    // start
     if (MAX > 1) {
       [].forEach.call(this._$slides, function ($slide, i) {
         if (i == 0) {
@@ -140,7 +149,6 @@ var Hammer;
       $slider.classList.add(settings.prefix + 'loaded')
 
       if (settings.autoplay) {
-        // start
         setTimeout(function () {
           this._timer = setTimeout(
             function () {
