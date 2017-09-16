@@ -64,7 +64,7 @@
     vanillaSlider(
       document.getElementById('vslider-background'), {
         itemSelector: 'span',
-        height: 300
+        height: '50vh'
       }
     )
 
