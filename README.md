@@ -35,7 +35,15 @@ Default settings:
 
 Example:
 
-    var slider = vanillaSlider(someDomElement)
+    var slider = vanillaSlider(someDomElement, {
+      // optional options
+      height: '5em'
+    })
 
     slider.prev()
     slider.next()
+
+
+Known Issues:
+
+- resize hides all sliders with no explicit height :(
