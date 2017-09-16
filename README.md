@@ -35,11 +35,17 @@ Default settings:
 
 Example:
 
+    <div class="vslider">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </div>
+
+
     var slider = vanillaSlider(someDomElement, {
       // optional options
       height: '5em'
     })
-
     slider.prev()
     slider.next()
 
