@@ -2,12 +2,34 @@ body {
   font-family: sans-serif;
 }
 
-.vslider {
-  font-size: 3em;
+h2 {
+  margin: 2em 0 0.5em;
+}
+p {
+  margin: 0.5em 0;
 }
 
-.vslider > div {
-  width: 100%;
-  background: #ccc;
+.vslider {
+  margin-bottom: 1.5em;
+  font-size: 3em;
+  font-weight: bold;
   text-align: center;
+  color: #fff;
+  background: #050;
+}
+
+
+.vslider-customstatus .vslider-status > li {
+  color: #fff;
+  border-radius: 0.1em;
+}
+
+.vslider-background span {
+  background: #eee no-repeat center;
+  background-size: contain;
+}
+
+.vslider-images img {
+  display: block;
+  margin: 0 auto;
 }

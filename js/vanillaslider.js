@@ -10,21 +10,28 @@
     var settings = this._settings = Object.assign({
       itemSelector: 'div',
       prefix: 'vslider-',
-      height: null, // if null set height automatically else use height
-      autoplay: true,
-      timeout: 3000,
-      initialTimeout: 1000,
-      rotate: true,
-      navigation: false,
-      keyboardnavigation: false,
-      swipenavigation: false,
+
+      // if null set height automatically else use height
+      // number (=px) or expliocit like "3em"
+      height: null,
+
+      rotation: true,
+      autoplay: options.rotation === false ? false : true,
+      initialTimeout: 4000,
+      timeout: 8000,
+
+      navigation: true,
+      keyboardnavigation: true,
+      swipenavigation: true,
       swipedirection: 'h', // h or v
       wheelnavigation: false,
       onSwipeWheel: null,
-      status: false,
+
+      status: true,
       statusContent: function (c, length) {
         return '•';
       },
+
       after: function (c, length) {}
     }, options);
     this._$slides = $slider.querySelectorAll(settings.itemSelector)
@@ -33,6 +40,10 @@
     this._$status
     this._active = 0
     this._timer = null
+
+    if (typeof settings.height === 'number') {
+      settings.height = settings.height + 'px'
+    }
 
 
     var MAX = this._MAX = this._$slides.length
@@ -46,8 +57,10 @@
         (function (index) {
           var $i = document.createElement('li')
 
+          $i.classList.add(settings.prefix + 'status-item')
+
           if (i === 0) {
-            $i.classList.add(settings.prefix + 'status-active')
+            $i.classList.add(settings.prefix + 'status-item-active')
           }
 
           $i.textContent = settings.statusContent(i, MAX)
@@ -138,15 +151,15 @@
 
     // start
     if (MAX > 1) {
+      $slider.style.height = settings.height || getComputedStyle($slider).height
+
+      ;
       [].forEach.call(this._$slides, function ($slide, i) {
         if (i == 0) {
           $slide.classList.add(settings.prefix + 'active')
         }
         $slide.classList.add(settings.prefix + 'item')
       })
-
-      $slider.style.height = settings.height || getComputedStyle($slider).height
-      $slider.classList.add(settings.prefix + 'loaded')
 
       if (settings.autoplay) {
         setTimeout(function () {
@@ -162,7 +175,7 @@
 
   VanillaSlider.prototype._updateStatus = function () {
     if (this._settings.status) {
-      var activeClass = this._settings.prefix + 'status-active'
+      var activeClass = this._settings.prefix + 'status-item-active'
 
       this._$status.querySelector('.' + activeClass)
         .classList.remove(activeClass)
@@ -197,7 +210,7 @@
     if (index !== undefined && index === this._active) {
       return true
     }
-    else if (!this._settings.rotate && this._active === 0) {
+    else if (index === undefined && !this._settings.rotation && this._active === 0) {
       return true
     }
 
@@ -227,7 +240,7 @@
     if (index !== undefined && index === this._active) {
       return true
     }
-    else if (!this._settings.rotate && this._active === this._$slides.length - 1) {
+    else if (index === undefined && !this._settings.rotation && this._active === this._$slides.length - 1) {
       return true
     }
 
@@ -257,7 +270,7 @@
 
     [].forEach.call($sliders, function ($slider, i) {
       sliders.push(
-        new VanillaSlider($slider, options)
+        new VanillaSlider($slider, options || {})
       )
     })
     return sliders.length > 1 ? sliders : sliders[0]

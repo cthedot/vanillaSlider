@@ -4,19 +4,67 @@
 
   function init() {
 
-    var $v1 = document.getElementById('vslider-1')
+    vanillaSlider(
+      document.getElementById('vslider-default')
+    )
 
-    var v1 = vanillaSlider($v1, {
-      height: '5em',
-      // rotate: false,
-      status: true,
-      navigation: true,
-      keyboardnavigation: true
-      // wheelnavigation: true,
-      // onSwipeWheel: function () {
-      //   console.log(arguments)
-      // }
-    })
+    vanillaSlider(
+      document.getElementById('vslider-base'), {
+        initialTimeout: 1500,
+        timeout: 3000,
+        navigation: false,
+        keyboardnavigation: false,
+        swipenavigation: false,
+        status: false
+      }
+    )
+
+    vanillaSlider(
+      document.getElementById('vslider-noautoplay'), {
+        autoplay: false
+      }
+    )
+
+    vanillaSlider(
+      document.getElementById('vslider-norotation'), {
+        rotation: false,
+        initialTimeout: 1000,
+        timeout: 2000
+      }
+    )
+
+    vanillaSlider(
+      document.getElementById('vslider-norotation-autoplay'), {
+        rotation: false,
+        autoplay: true,
+        initialTimeout: 1000,
+        timeout: 2000
+      }
+    )
+
+    vanillaSlider(
+      document.getElementById('vslider-custom'), {
+        height: '5em',
+        statusContent: function (i, all) {
+          return i + 1
+        },
+      }
+    )
+
+    // Should wait for images to load and set explicit height!
+    vanillaSlider(
+      document.getElementById('vslider-background'), {
+        itemSelector: 'span',
+        height: 300
+      }
+    )
+
+    vanillaSlider(
+      document.getElementById('vslider-images'), {
+        height: 300
+      }
+    )
+
 
   }
 

@@ -17,15 +17,77 @@
 <body>
   <h1>vanillaSlider</h1>
 
-  <section class="vslider" id="vslider-1">
+  <h2>Default</h2>
+  <p>rotation, Autoplay, Navigation, Status</p>
+  <section class="vslider" id="vslider-default">
     <div>1</div>
     <div>2</div>
     <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
   </section>
+
+  <h2>Simple</h2>
+  <p>Navigation off, Status off, custom timing (1<sup>st</sup> and following)</p>
+  <section class="vslider" id="vslider-base">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </section>
+
+  <h2>Autoplay off</h2>
+  <section class="vslider" id="vslider-noautoplay">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </section>
+
+  <h2>Rotation off</h2>
+  <p>(implicitly no Autoplay)</p>
+  <section class="vslider" id="vslider-norotation">
+    <div>1 start</div>
+    <div>2</div>
+    <div>3 end</div>
+  </section>
+
+  <h2>Rotation off, Autoplay <i>on explicitly</i></h2>
+  <p></p>
+  <section class="vslider" id="vslider-norotation-autoplay">
+    <div>1 start</div>
+    <div>2</div>
+    <div>3 end</div>
+  </section>
+
+  <h2>Explicit height. Custom Status.</h2>
+  <p>Height as number (=px) or string <code>5em</code>.</p>
+  <section class="vslider vslider-customstatus" id="vslider-custom">
+    <div>1</div>
+    <div>2
+      <br/>2</div>
+    <div>3</div>
+    <div>4</div>
+  </section>
+
+  <h2>Background Images</h2>
+  <p>Custom elements too</p>
+  <section class="vslider vslider-background" id="vslider-background">
+    <span style="background-image: url(image/1.jpg)">1</span>
+    <span style="background-image: url(image/2.jpg)">2</span>
+    <span style="background-image: url(image/3.jpg)">3</span>
+  </section>
+
+  <h2>With Images</h2>
+  <p>Auto height which uses <b>first</b> item height, should wait for images to load and use that height!</p>
+  <section class="vslider vslider-images" id="vslider-images">
+    <div>
+      <img alt="1" src="image/1.jpg">
+    </div>
+    <div>
+      <img alt="2" src="image/2.jpg">
+    </div>
+    <div>
+      <img alt="3" src="image/3.jpg">
+    </div>
+  </section>
+
 
   <script src="js/vanillaslider.js"></script>
   <script src="js/script.js"></script>
