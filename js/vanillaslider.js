@@ -2,7 +2,7 @@
  * vanillaSlider
  */
 ;
-(function ($) {
+(function () {
   "use strict";
 
   var VanillaSlider = function ($slider, options) {
