@@ -8,7 +8,7 @@
       document.getElementById('vslider-default')
     )
 
-    vanillaSlider(
+    var baseSlider = vanillaSlider(
       document.getElementById('vslider-base'), {
         initialTimeout: 1500,
         timeout: 3000,
@@ -18,6 +18,15 @@
         status: false
       }
     )
+    window.baseSlider = baseSlider
+
+    // custom controls
+    document.getElementById('custom-prev').addEventListener('click', function () {
+      baseSlider.prev()
+    }, false)
+    document.getElementById('custom-next').addEventListener('click', function () {
+      baseSlider.next()
+    }, false)
 
     vanillaSlider(
       document.getElementById('vslider-noautoplay'), {

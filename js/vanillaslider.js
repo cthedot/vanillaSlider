@@ -22,6 +22,7 @@
 
       navigation: true,
       keyboardnavigation: true,
+      // needs Hammer
       swipenavigation: true,
       swipedirection: 'h', // h or v
       wheelnavigation: false,
