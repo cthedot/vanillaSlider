@@ -48,3 +48,10 @@ Example:
     })
     slider.prev()
     slider.next()
+
+
+Files needed:
+
+    /css/vanillaslider.css
+    /js/vanillaslider.js
+    // optionally Hammer JS

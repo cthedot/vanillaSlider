@@ -2,6 +2,9 @@
 (function ($) {
   "use strict";
 
+  // example script
+
+
   function init() {
 
     vanillaSlider(
