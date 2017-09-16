@@ -35,8 +35,6 @@
       after: function (c, length) {}
     }, options);
     this._$slides = $slider.querySelectorAll(settings.itemSelector)
-    this._$prevButton
-    this._nextButton
     this._$status
     this._active = 0
     this._timer = null
@@ -275,8 +273,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 1.0
+  vanillaSlider.VERSION = 1.1
 
   window.vanillaSlider = vanillaSlider
-
 }());

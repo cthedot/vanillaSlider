@@ -70,10 +70,12 @@
   border: 0.1em solid #fff;
   border-radius: 100%;
   margin: 0 0.5em;
-  transition: 0.4s;
+  transition: 0.3s;
   opacity: 0.3;
 }
 
+.vslider-status-item:hover,
+.vslider-status-item:focus,
 .vslider-status-item-active {
   opacity: 0.6;
 }
@@ -92,7 +94,16 @@
   border: none;
   color: currentColor;
   background: none;
+  opacity: 0.6;
 }
+
+.vslider-prev:hover,
+.vslider-prev:focus,
+.vslider-next:hover,
+.vslider-next:focus {
+  opacity: 1;
+}
+
 
 .vslider-next {
   left: auto;
