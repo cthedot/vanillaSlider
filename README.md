@@ -48,8 +48,3 @@ Example:
     })
     slider.prev()
     slider.next()
-
-
-Known Issues:
-
-- resize hides all sliders with no explicit height :(
