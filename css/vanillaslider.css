@@ -64,6 +64,7 @@
   font-size: 0.5em;
   width: 1em;
   height: 1em;
+  line-height: 1;
   color: #000;
   background: #000;
   border: 0.1em solid #fff;
@@ -87,9 +88,9 @@
   position: absolute;
   top: 50%;
   left: 0;
+  transform: translateY(-50%);
   line-height: 1;
   font-size: 1em;
-  margin-top: -0.5em;
   border: none;
   color: currentColor;
   background: none;

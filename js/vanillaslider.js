@@ -12,7 +12,7 @@
       prefix: 'vslider-',
 
       // if null set height automatically else use height
-      // number (=px) or expliocit like "3em"
+      // number (=px) or explicit like "3em"
       height: null,
 
       rotation: true,
@@ -185,12 +185,14 @@
 
   VanillaSlider.prototype._getActive = function (back, index) {
     clearTimeout(this._timer)
+
     this._$slides[this._active].classList.remove(
       this._settings.prefix + 'active'
     )
 
     if (index !== undefined) {
-      this._active = index
+      this._active = index > 0 && index < this._MAX ?
+        index : this._MAX - 1
     }
     else {
       if (!back) {
@@ -274,7 +276,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 1.1
+  vanillaSlider.VERSION = 1.2
 
   window.vanillaSlider = vanillaSlider
 }());

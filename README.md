@@ -2,6 +2,8 @@
 
 A simple Vanilla JS based slider.
 
+Demo: http://cthedot.de/vanilla-slider/
+
 Default settings:
 
     {
@@ -9,7 +11,7 @@ Default settings:
       prefix: 'vslider-',
 
       // if null set height automatically else use height
-      // number (=px) or expliocit like "3em"
+      // number (=px) or explicit like "3em"
       height: null,
 
       rotation: true,
@@ -41,13 +43,18 @@ Example:
       <div>3</div>
     </div>
 
+    // single slider
+    var slider = vanillaSlider(someDomElement)
+    slider.prev()
+    slider.next()
+    slider.next(index) // optionally which to show next
 
-    var slider = vanillaSlider(someDomElement, {
+    // multiple sliders
+    var sliders = vanillaSlider(someDomElements, {
       // optional options
       height: '5em'
     })
-    slider.prev()
-    slider.next()
+    sliders[0].next(3)
 
 
 Files needed:

@@ -15,15 +15,23 @@
 </head>
 
 <body>
-  <h1>vanillaSlider</h1>
+  <h1>Vanilla Slider</h1>
+  <p>
+    <a href="https://github.com/cthedot/vanillaSlider">https://github.com/cthedot/vanillaSlider</a>
+  </p>
+
 
   <h2>Default</h2>
   <p>rotation, Autoplay, Navigation, Status</p>
-  <div class="vslider" id="vslider-default">
-    <div>1<br>1</div>
+  <div class="vslider vslider-default">
+    <div>1
+      <br>1</div>
     <div>2</div>
     <div>3</div>
+    <div>4</div>
+    <div>5</div>
   </div>
+
 
   <h2>Simple</h2>
   <p>Navigation off, Status off, custom timing (1<sup>st</sup> and following)</p>
@@ -38,12 +46,14 @@
     <div>3</div>
   </div>
 
+
   <h2>Autoplay off</h2>
   <div class="vslider" id="vslider-noautoplay">
     <div>1</div>
     <div>2</div>
     <div>3</div>
   </div>
+
 
   <h2>Rotation off</h2>
   <p>(implicitly no Autoplay)</p>
@@ -53,6 +63,7 @@
     <div>3 end</div>
   </div>
 
+
   <h2>Rotation off, Autoplay <i>on explicitly</i></h2>
   <p></p>
   <div class="vslider" id="vslider-norotation-autoplay">
@@ -61,8 +72,9 @@
     <div>3 end</div>
   </div>
 
+
   <h2>Explicit height. Custom Status.</h2>
-  <p>Height as number (=px) or string <code>5em</code>.</p>
+  <p>Height as number (=px) or string <code>5em</code>. Prev/Next custom styles</p>
   <div class="vslider vslider-customstatus" id="vslider-custom">
     <div>1</div>
     <div>2
@@ -71,13 +83,6 @@
     <div>4</div>
   </div>
 
-  <h2>Background Images</h2>
-  <p>Custom elements too</p>
-  <div class="vslider vslider-background" id="vslider-background">
-    <span style="background-image: url(image/1.jpg)">1</span>
-    <span style="background-image: url(image/2.jpg)">2</span>
-    <span style="background-image: url(image/3.jpg)">3</span>
-  </div>
 
   <h2>With Images</h2>
   <p>Auto height which uses <b>first</b> item height, should wait for images to load and use that height!</p>
@@ -91,6 +96,23 @@
     <div>
       <img alt="3" src="image/3.jpg">
     </div>
+  </div>
+
+
+  <h2>Background Images</h2>
+  <p>Custom elements too</p>
+  <div class="vslider vslider-background" id="vslider-background">
+    <span style="background-image: url(image/1.jpg)">1</span>
+    <span style="background-image: url(image/2.jpg)">2</span>
+    <span style="background-image: url(image/3.jpg)">3</span>
+  </div>
+
+
+  <h2>Default but custom CSS animation</h2>
+  <div class="vslider vslider-default vslider-trans">
+    <div style="background-image: url(image/1.jpg)">1</div>
+    <div style="background-image: url(image/2.jpg)">2</div>
+    <div style="background-image: url(image/3.jpg)">3</div>
   </div>
 
 

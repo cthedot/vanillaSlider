@@ -7,9 +7,11 @@
 
   function init() {
 
-    vanillaSlider(
-      document.getElementById('vslider-default')
+    // multiple
+    window.defaultSliders = vanillaSlider(
+      document.querySelectorAll('.vslider-default')
     )
+    console.log('window.defaultSliders:', window.defaultSliders)
 
     var baseSlider = vanillaSlider(
       document.getElementById('vslider-base'), {
@@ -63,6 +65,13 @@
       }
     )
 
+    vanillaSlider(
+      document.getElementById('vslider-images'), {
+        height: 300
+      }
+    )
+
+
     // Should wait for images to load and set explicit height!
     vanillaSlider(
       document.getElementById('vslider-background'), {
@@ -70,13 +79,6 @@
         height: '50vh'
       }
     )
-
-    vanillaSlider(
-      document.getElementById('vslider-images'), {
-        height: 300
-      }
-    )
-
 
   }
 

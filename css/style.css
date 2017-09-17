@@ -1,36 +1,105 @@
 /* example css */
+
+html {
+  color: #fff;
+  background-color: #1C2D44;
+}
+
 body {
   font-family: sans-serif;
+}
+
+a {
+  color: inherit;
 }
 
 h2 {
   margin: 2em 0 0.5em;
 }
+
 p {
-  margin: 0.5em 0;
+  margin: 0.5em 0 1em;
 }
 
+
+/* some basic style */
 .vslider {
-  margin-bottom: 1.5em;
+  color: #fff;
+  background-color: #82898c;
   font-size: 3em;
   font-weight: bold;
   text-align: center;
-  color: #fff;
-  background: #050;
+  margin-bottom: 1.5em;
 }
 
+
+
+/* custom status and navigation */
 
 .vslider-customstatus .vslider-status > li {
   color: #fff;
-  border-radius: 0.1em;
+  padding: 0.25em;
+  border-radius: 0.25em;
 }
 
+.vslider-customstatus .vslider-prev,
+.vslider-customstatus .vslider-next {
+  color: transparent;
+  width: 0;
+  height: 0;
+  border-top: 0.5em solid transparent;
+  border-bottom: 0.5em solid transparent;
+}
+
+.vslider-customstatus .vslider-prev {
+  border-right: 1em solid #000;
+}
+
+.vslider-customstatus .vslider-next {
+  border-left: 1em solid #000;
+}
+
+
+
+/* bg */
+
 .vslider-background span {
-  background: #eee no-repeat center;
+  background: #000 no-repeat center;
   background-size: contain;
 }
+
+
+
+/* images */
 
 .vslider-images img {
   display: block;
   margin: 0 auto;
+}
+
+
+
+/* custom animation */
+
+.vslider-trans {
+  min-height: 50vh;
+  background-color: transparent;
+}
+
+.vslider-trans .vslider-item {
+  background: no-repeat center;
+  background-size: cover;
+
+  transition: z-index 0s,
+  transform 1s ease-in-out;
+  opacity: 1;
+  transform: rotateY(90deg);
+}
+
+.vslider-trans .vslider-active {
+  transform: rotateY(0deg);
+}
+
+.vslider-trans .vslider-before {
+  transform: rotateY(-90deg);
 }
