@@ -34,20 +34,23 @@
 
 
   <h2>Simple</h2>
-  <p>Navigation off, Status off, custom timing (1<sup>st</sup> and following)</p>
-  <p>
-    <h3>Custom navigation: <code>slider.prev() slider.next()</code></h3>
+  <p>Navigation off, Status off, Autoplay off. Custom navigation: <code>slider.prev() slider.next(index)</code></p>
+  <div class="custom-nav">
     <button type="button" id="custom-prev">prev</button>
+    <input type="number" id="custom-input" placeholder="index">
     <button type="button" id="custom-next">next</button>
-  </p>
+  </div>
   <div class="vslider" id="vslider-base">
     <div>1</div>
     <div>2</div>
     <div>3</div>
+    <div>4</div>
+    <div>5</div>
   </div>
 
 
   <h2>Autoplay off</h2>
+  <p>Custom timing (1<sup>st</sup> and following)</p>
   <div class="vslider" id="vslider-noautoplay">
     <div>1</div>
     <div>2</div>
@@ -56,7 +59,7 @@
 
 
   <h2>Rotation off</h2>
-  <p>(implicitly no Autoplay)</p>
+  <p>Implicitly no Autoplay. Custom timing (1<sup>st</sup> and following)</p>
   <div class="vslider" id="vslider-norotation">
     <div>1 start</div>
     <div>2</div>

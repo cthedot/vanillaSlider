@@ -13,23 +13,31 @@
     )
     console.log('window.defaultSliders:', window.defaultSliders)
 
+    var $input = document.getElementById('custom-input')
     var baseSlider = vanillaSlider(
       document.getElementById('vslider-base'), {
-        initialTimeout: 1500,
-        timeout: 3000,
+        autoplay: false,
         navigation: false,
         keyboardnavigation: false,
         swipenavigation: false,
-        status: false
+        status: false,
+        after: function (index, length) {
+          $input.value = index
+        }
       }
     )
     window.baseSlider = baseSlider
 
     // custom controls
-    document.getElementById('custom-prev').addEventListener('click', function () {
+    $input.addEventListener('change', function (e) {
+      baseSlider.next(
+        parseInt(e.target.value)
+      )
+    }, false)
+    document.getElementById('custom-prev').addEventListener('click', function (e) {
       baseSlider.prev()
     }, false)
-    document.getElementById('custom-next').addEventListener('click', function () {
+    document.getElementById('custom-next').addEventListener('click', function (e) {
       baseSlider.next()
     }, false)
 

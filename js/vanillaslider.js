@@ -5,6 +5,37 @@
 (function () {
   "use strict";
 
+  // Polyfill for e.g. IE
+  if (typeof Object.assign != 'function') {
+    // Must be writable: true, enumerable: false, configurable: true
+    Object.defineProperty(Object, "assign", {
+      value: function assign(target, varArgs) { // .length of function is 2
+        'use strict';
+        if (target == null) { // TypeError if undefined or null
+          throw new TypeError('Cannot convert undefined or null to object');
+        }
+
+        var to = Object(target);
+
+        for (var index = 1; index < arguments.length; index++) {
+          var nextSource = arguments[index];
+
+          if (nextSource != null) { // Skip over if undefined or null
+            for (var nextKey in nextSource) {
+              // Avoid bugs when hasOwnProperty is shadowed
+              if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                to[nextKey] = nextSource[nextKey];
+              }
+            }
+          }
+        }
+        return to;
+      },
+      writable: true,
+      configurable: true
+    });
+  }
+
   var VanillaSlider = function ($slider, options) {
     var self = this
     var settings = this._settings = Object.assign({
@@ -29,11 +60,11 @@
       onSwipeWheel: null,
 
       status: true,
-      statusContent: function (c, length) {
+      statusContent: function (index, length) {
         return '•';
       },
 
-      after: function (c, length) {}
+      after: function (index, length) {}
     }, options);
     this._$slides = $slider.querySelectorAll(settings.itemSelector)
     this._$status
@@ -191,7 +222,7 @@
     )
 
     if (index !== undefined) {
-      this._active = index > 0 && index < this._MAX ?
+      this._active = index >= 0 && index < this._MAX ?
         index : this._MAX - 1
     }
     else {
@@ -220,7 +251,8 @@
     var $active = this._getActive(true, index)
 
     $active.classList.add(prefix + 'direct')
-    $active.classList.remove(prefix + 'before', prefix + 'active')
+    $active.classList.remove(prefix + 'before')
+    $active.classList.remove(prefix + 'active')
     getComputedStyle($active).opacity // DO IT!
     $active.classList.remove(prefix + 'direct')
     $active.classList.add(prefix + 'active')
@@ -247,9 +279,12 @@
 
     var $active = this._getActive(false, index)
 
-    $active.classList.add(prefix + 'direct', prefix + 'active', prefix + 'before')
+    $active.classList.add(prefix + 'direct')
+    $active.classList.add(prefix + 'active')
+    $active.classList.add(prefix + 'before')
     getComputedStyle($active).opacity // DO IT!
-    $active.classList.remove(prefix + 'direct', prefix + 'before')
+    $active.classList.remove(prefix + 'direct')
+    $active.classList.remove(prefix + 'before')
 
     this._updateStatus()
     this._settings.after(this._active, this._MAX)
@@ -276,7 +311,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 1.2
+  vanillaSlider.VERSION = 1.3
 
   window.vanillaSlider = vanillaSlider
 }());

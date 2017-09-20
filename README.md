@@ -4,7 +4,7 @@ A simple Vanilla JS based slider.
 
 Demo: http://cthedot.de/vanilla-slider/
 
-Default settings:
+## Default settings
 
     {
       itemSelector: 'div',
@@ -28,14 +28,14 @@ Default settings:
       onSwipeWheel: null,
 
       status: true,
-      statusContent: function (c, length) {
+      statusContent: function (index, length) {
         return '•';
       },
 
-      after: function (c, length) {}
+      after: function (index, length) {}
     }
 
-Example:
+## Example
 
     <div class="vslider">
       <div>1</div>
@@ -57,8 +57,21 @@ Example:
     sliders[0].next(3)
 
 
-Files needed:
+## Files needed
 
     /css/vanillaslider.css
     /js/vanillaslider.js
     // optionally Hammer JS
+
+## Cross Browser
+Tested in the following browsers but should work in most modern ones
+
+- Firefox (tested in 55)
+- Chrome (tested in 61)
+- Edge (tested in 15)
+- Safari (tested in 10)
+- IE 11
+
+## TODO
+- add Hammer to example of custom "swipe" handling?
+- aria and use aria for styling?
