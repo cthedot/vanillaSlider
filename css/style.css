@@ -101,7 +101,7 @@ p {
   transform: rotateY(90deg);
 }
 
-.vslider-trans .vslider-active {
+.vslider-trans .vslider-item[aria-hidden='false'] {
   transform: rotateY(0deg);
 }
 
