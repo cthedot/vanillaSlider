@@ -44,7 +44,13 @@
 
     vanillaSlider(
       document.getElementById('vslider-noautoplay'), {
-        autoplay: false
+        autoplay: false,
+        i18n: {
+          title: 'Custom Carousel',
+          navigation: 'Custom Carousel navigation',
+          next: 'next Custom',
+          prev: 'previous Custom'
+        }
       }
     )
 

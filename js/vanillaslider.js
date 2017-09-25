@@ -126,6 +126,12 @@
       statusContent: function (index, length) {
         return '•';
       },
+      i18n: {
+        title: 'Carousel',
+        navigation: 'Carousel navigation',
+        next: 'next',
+        prev: 'previous'
+      },
 
       after: function (index, length) {}
     }, options);
@@ -145,11 +151,20 @@
     if (settings.status) {
       this._$status = document.createElement('ol')
       this._$status.classList.add(settings.prefix + 'status')
+      // not accessible as keyboard and button nav
+      this._$status.setAttribute('role', 'tablist')
 
       for (var i = 0, upto = MAX; i < upto; i++) {
         (function (index) {
           var $i = document.createElement('li')
 
+          if (index === 0) {
+            $i.setAttribute('tabindex', '0')
+          }
+          $i.setAttribute('id', settings.prefix + 'tab$' + index)
+          $i.setAttribute('role', 'tab')
+          $i.setAttribute('aria-label', index)
+          $i.setAttribute('aria-controls', settings.prefix + 'tabpanel$' + index)
           $i.classList.add(settings.prefix + 'status-item')
 
           if (i === 0) {
@@ -159,6 +174,12 @@
           $i.textContent = settings.statusContent(i, MAX)
           $i.addEventListener('click', function (e) {
             self.next(index)
+          }, false)
+          $i.addEventListener('keydown', function (e) {
+            console.log(e.keyCode)
+            if (e.keyCode === 13) {
+              self.next(index)
+            }
           }, false)
           self._$status.appendChild($i)
         }(i));
@@ -170,24 +191,36 @@
     // NAVIGATION
 
     if (settings.navigation) {
-      var $prev = document.createElement('button')
-      var $next = document.createElement('button')
+      var _$navigation = document.createElement('div')
+      var _$prev = document.createElement('button')
+      var _$next = document.createElement('button')
 
-      $prev.classList.add(this._settings.prefix + 'prev')
-      $next.classList.add(this._settings.prefix + 'next')
-      $prev.addEventListener('click', function (e) {
+      if (!$slider.id) {
+        $slider.id = this._settings.prefix + sliderIndex + '$' + Date.now();
+      }
+      _$navigation.setAttribute('aria-label', settings.i18n.navigation)
+      _$navigation.setAttribute('aria-controls', $slider.id)
+      _$navigation.classList.add(this._settings.prefix + 'nav')
+      _$navigation.appendChild(_$prev)
+      _$navigation.appendChild(_$next)
+
+      _$prev.setAttribute('aria-label', settings.i18n.prev)
+      _$prev.classList.add(this._settings.prefix + 'prev')
+      _$prev.addEventListener('click', function (e) {
         self.prev()
       }, true)
-      $next.addEventListener('click', function (e) {
+
+      _$next.setAttribute('aria-label', settings.i18n.next)
+      _$next.classList.add(this._settings.prefix + 'next')
+      _$next.addEventListener('click', function (e) {
         self.next()
       }, true)
 
-      $slider.appendChild($prev)
-      $slider.appendChild($next)
+      $slider.appendChild(_$navigation)
     }
 
     if (settings.keyboardnavigation) {
-      window.addEventListener('keydown', function (e) {
+      $slider.addEventListener('keydown', function (e) {
         var keyCode = e.keyCode
 
         switch (keyCode) {
@@ -248,12 +281,20 @@
 
     // start
     if (MAX > 1) {
+      $slider.setAttribute('tabindex', '0')
+      $slider.setAttribute('aria-label', settings.i18n.title)
+      $slider.setAttribute('aria-live', 'polite')
       $slider.style.height = settings.height || getComputedStyle($slider).height
-
       ;
       [].forEach.call(this._$slides, function ($slide, i) {
+        $slide.setAttribute('id', settings.prefix + 'tabpanel$' + i)
+        $slide.setAttribute('role', 'tabpanel')
+        $slide.setAttribute('aria-labelledby', settings.prefix + 'tab$' + i)
         if (i == 0) {
-          $slide.classList.add(settings.prefix + 'active')
+          $slide.setAttribute('aria-hidden', 'false')
+        }
+        else {
+          $slide.setAttribute('aria-hidden', 'true')
         }
         $slide.classList.add(settings.prefix + 'item')
       })
@@ -273,20 +314,20 @@
   VanillaSlider.prototype._updateStatus = function () {
     if (this._settings.status) {
       var activeClass = this._settings.prefix + 'status-item-active'
+      var $prevActive = this._$status.querySelector('.' + activeClass)
+      var $active = this._$status.querySelector('li:nth-child(' + (this._active + 1) + ')')
 
-      this._$status.querySelector('.' + activeClass)
-        .classList.remove(activeClass)
-      this._$status.querySelector('li:nth-child(' + (this._active + 1) + ')')
-        .classList.add(activeClass)
+      $prevActive.classList.remove(activeClass)
+      $active.classList.add(activeClass)
+      $prevActive.setAttribute('aria-selected', 'false')
+      $active.setAttribute('aria-selected', 'true')
     }
   }
 
   VanillaSlider.prototype._getActive = function (back, index) {
     clearTimeout(this._timer)
 
-    this._$slides[this._active].classList.remove(
-      this._settings.prefix + 'active'
-    )
+    this._$slides[this._active].setAttribute('aria-hidden', 'true')
 
     if (index !== undefined) {
       this._active = index >= 0 && index < this._MAX ?
@@ -303,6 +344,17 @@
     return this._$slides[this._active]
   }
 
+  VanillaSlider.prototype._finishAction = function ($active) {
+    this._updateStatus()
+    this._settings.after(this._active, this._MAX)
+    if (this._settings.autoplay) {
+      this._timer = setTimeout(function () {
+        this.next()
+      }.bind(this),
+        this._settings.timeout)
+    }
+  }
+
   VanillaSlider.prototype.prev = function (index) {
     var prefix = this._settings.prefix
 
@@ -317,21 +369,14 @@
 
     var $active = this._getActive(true, index)
 
+    $active.setAttribute('aria-hidden', 'true')
     $active.classList.add(prefix + 'direct')
     $active.classList.remove(prefix + 'before')
-    $active.classList.remove(prefix + 'active')
     getComputedStyle($active).opacity // DO IT!
+    $active.setAttribute('aria-hidden', 'false')
     $active.classList.remove(prefix + 'direct')
-    $active.classList.add(prefix + 'active')
 
-    this._updateStatus()
-    this._settings.after(this._active, this._MAX)
-    if (this._settings.autoplay) {
-      this._timer = setTimeout(function () {
-          this.next()
-        }.bind(this),
-        this._settings.timeout)
-    }
+    this._finishAction()
   }
 
   VanillaSlider.prototype.next = function (index) {
@@ -346,23 +391,20 @@
 
     var $active = this._getActive(false, index)
 
+    $active.setAttribute('aria-hidden', 'true')
     $active.classList.add(prefix + 'direct')
-    $active.classList.add(prefix + 'active')
     $active.classList.add(prefix + 'before')
     getComputedStyle($active).opacity // DO IT!
+    $active.setAttribute('aria-hidden', 'false')
     $active.classList.remove(prefix + 'direct')
     $active.classList.remove(prefix + 'before')
 
-    this._updateStatus()
-    this._settings.after(this._active, this._MAX)
-    if (this._settings.autoplay) {
-      this._timer = setTimeout(function () {
-          this.next()
-        }.bind(this),
-        this._settings.timeout)
-    }
+    this._finishAction()
   }
 
+
+  // used to generate slider ID
+  var sliderIndex = 0
 
   function vanillaSlider($sliders, options) {
     var sliders = [];
@@ -375,10 +417,11 @@
       sliders.push(
         new VanillaSlider($slider, options || {})
       )
+      sliderIndex++;
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 1.4
+  vanillaSlider.VERSION = 2.0
 
   window.vanillaSlider = vanillaSlider
 }());

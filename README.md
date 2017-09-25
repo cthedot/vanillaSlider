@@ -1,6 +1,6 @@
 # vanillaSlider
 
-A simple Vanilla JS based slider.
+A simple accessible Vanilla JS based slider/carousel.
 
 Demo: http://cthedot.de/vanilla-slider/
 
@@ -29,6 +29,13 @@ Demo: http://cthedot.de/vanilla-slider/
       status: true,
       statusContent: function (index, length) {
         return '•';
+      },
+
+      i18n: {
+        title: 'Carousel',
+        navigation: 'Carousel navigation',
+        next: 'next',
+        prev: 'previous'
       },
 
       after: function (index, length) {}
@@ -72,12 +79,4 @@ Tested in the following browsers but should work in most modern ones
 - IE 11
 
 ## Thanks
-PointerEvents Swipe implementation from https://patrickhlauke.github.io/touch/swipe/pointerevents.html
-
-## TODO
-- aria and use aria for styling?
-  https://stackoverflow.com/questions/16840054/wai-aria-roles-for-carousels-a-k-a-sliders-slideshows-galleries
-    tablist? https://www.marcozehe.de/2013/02/02/advanced-aria-tip-1-tabs-in-web-apps/
-    http://heydonworks.com/practical_aria_examples/#tab-interface
-    http://accessibility.athena-ict.com/aria/examples/carousel.shtml
-
+PointerEvents Swipe implementation adapted from https://patrickhlauke.github.io/touch/swipe/pointerevents.html

@@ -29,7 +29,7 @@
   transform: translateX(-10%);
 }
 
-.vslider-active {
+.vslider-item[aria-hidden='false'] {
   z-index: 30;
   opacity: 1.0;
   transform: translateX(0);
@@ -48,7 +48,7 @@
 .vslider-status {
   display: block;
   list-style: none;
-  z-index: 50;
+  z-index: 110;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -76,15 +76,24 @@
 
 .vslider-status-item:hover,
 .vslider-status-item:focus,
-.vslider-status-item-active {
+.vslider-status-item[aria-selected='true'] {
   opacity: 0.6;
+}
+
+.vslider-nav {
+  display: block;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .vslider-prev,
 .vslider-next {
   cursor: pointer;
   display: block;
-  z-index: 100;
   position: absolute;
   top: 50%;
   left: 0;
@@ -103,7 +112,6 @@
 .vslider-next:focus {
   opacity: 1;
 }
-
 
 .vslider-next {
   left: auto;
