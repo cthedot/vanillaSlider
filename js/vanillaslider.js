@@ -204,7 +204,8 @@
     }
 
     if (settings.swipenavigation) {
-      $slider.style.touchAction = 'none';
+      $slider.style.touchAction = settings.swipedirection === 'h' ?
+        'pan-y' : 'pan-x';
 
       initSwipe($slider, function (direction) {
         if (settings.swipedirection === 'h') {
