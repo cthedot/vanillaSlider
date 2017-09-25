@@ -36,6 +36,69 @@
     });
   }
 
+  function initSwipe($e, handler) {
+    var POINTER_EVENTS = window.PointerEvent ? true : false
+    var start = {};
+    var end = {};
+    var tracking = false;
+    var thresholdTime = 500;
+    var thresholdDistance = 100;
+
+    function startHandler(e) {
+      tracking = true;
+      /* Hack - e.timeStamp is whack in Fx/Android */
+      start.t = new Date().getTime();
+      start.x = POINTER_EVENTS ? e.clientX : e.touches[0].clientX;
+      start.y = POINTER_EVENTS ? e.clientY : e.touches[0].clientY;
+    };
+
+    function moveHandler(e) {
+      if (tracking) {
+        e.preventDefault();
+        end.x = POINTER_EVENTS ? e.clientX : e.touches[0].clientX;
+        end.y = POINTER_EVENTS ? e.clientY : e.touches[0].clientY;
+      }
+    }
+
+    function endEvent(e) {
+      if (tracking) {
+        tracking = false;
+        var now = new Date().getTime();
+        var deltaTime = now - start.t;
+        var deltaX = end.x - start.x;
+        var deltaY = end.y - start.y;
+        // if not too slow work out what the movement was
+        if (deltaTime < thresholdTime) {
+          if ((deltaX > thresholdDistance) && (Math.abs(deltaY) < thresholdDistance)) {
+            handler('left')
+          }
+          else if ((-deltaX > thresholdDistance) && (Math.abs(deltaY) < thresholdDistance)) {
+            handler('right')
+          }
+          else if ((deltaY > thresholdDistance) && (Math.abs(deltaX) < thresholdDistance)) {
+            handler('up')
+          }
+          else if ((-deltaY > thresholdDistance) && (Math.abs(deltaX) < thresholdDistance)) {
+            handler('down')
+          }
+        }
+      }
+    }
+    if (POINTER_EVENTS) {
+      $e.addEventListener('pointerdown', startHandler, false);
+      $e.addEventListener('pointermove', moveHandler, false);
+      $e.addEventListener('pointerup', endEvent, false);
+      $e.addEventListener('pointerleave', endEvent, false);
+      $e.addEventListener('pointercancel', endEvent, false);
+    }
+    else if (window.TouchEvent) {
+      $e.addEventListener('touchstart', startHandler, false);
+      $e.addEventListener('touchmove', moveHandler, false);
+      $e.addEventListener('touchend', endEvent, false);
+    }
+  }
+
+
   var VanillaSlider = function ($slider, options) {
     var self = this
     var settings = this._settings = Object.assign({
@@ -140,28 +203,31 @@
       })
     }
 
-    if (window.Hammer && (settings.swipenavigation || settings.navigation)) {
-      var _swipehammer = Hammer($slider, {
-        drag: false,
-        tap: false
+    if (settings.swipenavigation) {
+      $slider.style.touchAction = 'none';
+
+      initSwipe($slider, function (direction) {
+        if (settings.swipedirection === 'h') {
+          if (direction === 'left') {
+            self.prev()
+          }
+          if (direction === 'right') {
+            self.next()
+          }
+        }
+        if (settings.swipedirection === 'v') {
+          if (direction === 'up') {
+            self.prev()
+          }
+          if (direction === 'down') {
+            self.next()
+          }
+        }
       })
-      _swipehammer.on(
-        settings.swipedirection === 'h' ? 'swipeleft' : 'swipedown',
-        function (e) {
-          self.prev()
-          settings.onSwipeWheel && settings.onSwipeWheel(self._active, MAX, true)
-        })
-      _swipehammer.on(settings.swipedirection === 'h' ? 'swiperight' : 'swipeup',
-        function (e) {
-          self.next()
-          settings.onSwipeWheel && settings.onSwipeWheel(self._active, MAX, false)
-        })
     }
 
     if (settings.wheelnavigation) {
       $slider.addEventListener('wheel', function (e) {
-        clearTimeout(self._timer)
-
         requestAnimationFrame(function () {
           var next = e.deltaY > 0
 
@@ -311,7 +377,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 1.3
+  vanillaSlider.VERSION = 1.4
 
   window.vanillaSlider = vanillaSlider
 }());

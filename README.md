@@ -21,7 +21,6 @@ Demo: http://cthedot.de/vanilla-slider/
 
       navigation: true,
       keyboardnavigation: true,
-      // needs Hammer
       swipenavigation: true,
       swipedirection: 'h', // h or v
       wheelnavigation: false,
@@ -72,6 +71,13 @@ Tested in the following browsers but should work in most modern ones
 - Safari (tested in 10)
 - IE 11
 
+## Thanks
+PointerEvents Swipe implementation from https://patrickhlauke.github.io/touch/swipe/pointerevents.html
+
 ## TODO
-- add Hammer to example of custom "swipe" handling?
 - aria and use aria for styling?
+  https://stackoverflow.com/questions/16840054/wai-aria-roles-for-carousels-a-k-a-sliders-slideshows-galleries
+    tablist? https://www.marcozehe.de/2013/02/02/advanced-aria-tip-1-tabs-in-web-apps/
+    http://heydonworks.com/practical_aria_examples/#tab-interface
+    http://accessibility.athena-ict.com/aria/examples/carousel.shtml
+

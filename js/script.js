@@ -20,6 +20,7 @@
         navigation: false,
         keyboardnavigation: false,
         swipenavigation: false,
+        wheelnavigation: true,
         status: false,
         after: function (index, length) {
           $input.value = index
@@ -84,7 +85,8 @@
     vanillaSlider(
       document.getElementById('vslider-background'), {
         itemSelector: 'span',
-        height: '50vh'
+        height: '50vh',
+        swipedirection: 'v'
       }
     )
 
