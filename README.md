@@ -72,9 +72,9 @@ Demo: http://cthedot.de/vanilla-slider/
 ## Cross Browser
 Tested in the following browsers but should work in most modern ones
 
-- Firefox (tested in 55)
-- Chrome (tested in 61)
-- Edge (tested in 15)
+- Firefox (tested in 58)
+- Chrome (tested in 64)
+- Edge (tested in 16)
 - Safari (tested in 10)
 - IE 11
 
