@@ -116,7 +116,6 @@
 
       navigation: true,
       keyboardnavigation: true,
-      // needs Hammer
       swipenavigation: true,
       swipedirection: 'h', // h or v
       wheelnavigation: false,
@@ -421,7 +420,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 2.0
+  vanillaSlider.VERSION = 2.0.1
 
   window.vanillaSlider = vanillaSlider
 }());
