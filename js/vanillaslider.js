@@ -175,7 +175,6 @@
             self.next(index)
           }, false)
           $i.addEventListener('keydown', function (e) {
-            console.log(e.keyCode)
             if (e.keyCode === 13) {
               self.next(index)
             }
