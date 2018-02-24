@@ -419,7 +419,7 @@
     })
     return sliders.length > 1 ? sliders : sliders[0]
   }
-  vanillaSlider.VERSION = 2.1
+  vanillaSlider.VERSION = 2.2
 
   window.vanillaSlider = vanillaSlider
 }());

@@ -1,4 +1,4 @@
-/* vanillaSlider.VERSION = 2.1 */
+/* vanillaSlider.VERSION = 2.2 */
 .vslider {
   position: relative;
   overflow: hidden;
@@ -31,6 +31,10 @@
 }
 
 .vslider-item[aria-hidden='false'] {
+  /* hack for Edge 16?! */
+  transition: z-index 0s,
+  opacity .8s ease-in-out,
+  transform .4s ease-in-out;
   z-index: 30;
   opacity: 1.0;
   transform: translateX(0);
